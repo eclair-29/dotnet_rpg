@@ -14,20 +14,21 @@ namespace dotnet_rpg.Controllers
         {
             new(),
             new() {
+                Id = 1,
                 Class = RpgClass.Mage
             }
         };
 
-        [HttpGet("GetAll")]
+        [HttpGet]
         public ActionResult<List<Character>> Get()
         {
             return Ok(characters);
         }
 
-        [HttpGet]
-        public ActionResult<Character> GetSingle()
+        [HttpGet("{id}")]
+        public ActionResult<Character> GetSingle(int id)
         {
-            return Ok(characters[0]);
+            return Ok(characters.FirstOrDefault(character => character.Id == id));
         }
     }
 }
