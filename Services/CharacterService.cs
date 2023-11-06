@@ -15,18 +15,19 @@ namespace dotnet_rpg.Services
                 Class = RpgClass.Mage
             }
         };
-        public List<Character> CreateCharacter(Character newCharacter)
+        public async Task<List<Character>> CreateCharacter(Character newCharacter)
         {
             characters.Add(newCharacter);
+
             return characters;
         }
 
-        public List<Character> GetAllCharacters()
+        public async Task<List<Character>> GetAllCharacters()
         {
             return characters;
         }
 
-        public Character GetCharacterById(int id)
+        public async Task<Character> GetCharacterById(int id)
         {
             var character = characters.FirstOrDefault(character => character.Id == id);
 
