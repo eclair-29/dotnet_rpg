@@ -10,12 +10,24 @@ namespace dotnet_rpg.Controllers
     [Route("api/v1/[controller]")]
     public class CharacterController : ControllerBase
     {
-        static readonly Character knight = new();
+        static readonly List<Character> characters = new()
+        {
+            new(),
+            new() {
+                Class = RpgClass.Mage
+            }
+        };
+
+        [HttpGet("GetAll")]
+        public ActionResult<List<Character>> Get()
+        {
+            return Ok(characters);
+        }
 
         [HttpGet]
-        public ActionResult<Character> Get()
+        public ActionResult<Character> GetSingle()
         {
-            return Ok(knight);
+            return Ok(characters[0]);
         }
     }
 }
