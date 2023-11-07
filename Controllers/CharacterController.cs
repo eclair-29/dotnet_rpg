@@ -41,8 +41,6 @@ namespace dotnet_rpg.Controllers
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> CreateCharacter(AddCharacterDto newCharacter)
         {
-            characters.Add(newCharacter);
-
             return Ok(await _characterService.CreateCharacter(newCharacter));
         }
     }
