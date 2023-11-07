@@ -15,9 +15,9 @@ namespace dotnet_rpg.Services
                 Class = RpgClass.Mage
             }
         };
-        public async Task<ServiceResponse<List<Character>>> CreateCharacter(Character newCharacter)
+        public async Task<ServiceResponse<List<GetCharacterDto>>> CreateCharacter(AddCharacterDto newCharacter)
         {
-            var serviceResponse = new ServiceResponse<List<Character>>();
+            var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
 
             characters.Add(newCharacter);
             serviceResponse.Data = characters;
@@ -25,9 +25,9 @@ namespace dotnet_rpg.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<Character>>> GetAllCharacters()
+        public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
         {
-            var serviceResponse = new ServiceResponse<List<Character>>
+            var serviceResponse = new ServiceResponse<List<GetCharacterDto>>
             {
                 Data = characters
             };
@@ -35,10 +35,10 @@ namespace dotnet_rpg.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<Character>> GetCharacterById(int id)
+        public async Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id)
         {
             var character = characters.FirstOrDefault(character => character.Id == id);
-            var serviceResponse = new ServiceResponse<Character>
+            var serviceResponse = new ServiceResponse<GetCharacterDto>
             {
                 Data = character
             };
