@@ -15,12 +15,20 @@ namespace dotnet_rpg.Services
                 Class = RpgClass.Mage
             }
         };
+        private readonly IMapper _autoMapper;
+
+        public CharacterService(IMapper autoMapper)
+        {
+            _autoMapper = autoMapper;
+        }
         public async Task<ServiceResponse<List<GetCharacterDto>>> CreateCharacter(AddCharacterDto newCharacter)
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
+            var characterWithNewId = _autoMapper.Map<Character>(newCharacter);
 
-            characters.Add(newCharacter);
-            serviceResponse.Data = characters;
+            characterWithNewId.Id = characters.Max(character => character.Id) + 1;
+            characters.Add(characterWithNewId);
+            serviceResponse.Data = characters.Select(character => _autoMapper.Map<GetCharacterDto>(character)).ToList(); // same with _autoMapper.Map<List<GetCharacterDto>>(characters)
 
             return serviceResponse;
         }
@@ -29,7 +37,7 @@ namespace dotnet_rpg.Services
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>
             {
-                Data = characters
+                Data = _autoMapper.Map<List<GetCharacterDto>>(characters)
             };
 
             return serviceResponse;
@@ -40,7 +48,7 @@ namespace dotnet_rpg.Services
             var character = characters.FirstOrDefault(character => character.Id == id);
             var serviceResponse = new ServiceResponse<GetCharacterDto>
             {
-                Data = character
+                Data = _autoMapper.Map<GetCharacterDto>(character)
             };
 
             return serviceResponse;
